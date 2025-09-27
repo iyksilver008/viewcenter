@@ -3,25 +3,24 @@
     "name": "ViewCenter",
     "slug": "viewcenter",
     "version": "1.0.0",
-    "orientation": "default",
-    "icon": "./assets/viewcenter.png",
+    "orientation": "portrait",
+    "platforms": ["ios", "android", "web"],
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true
-    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/viewcenter.png",
-        "backgroundColor": "#ffffff"
-      }
+      "package": "com.viewcenter.app"
+    },
+    "ios": {
+      "bundleIdentifier": "com.viewcenter.app"
     }
   }
 }
