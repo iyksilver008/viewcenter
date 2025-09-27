@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, Platform } from "react-native";
 import { WebView } from "react-native-webview";
 
 export default function App() {
@@ -13,7 +13,6 @@ export default function App() {
   if (showSplash) {
     return (
       <View style={styles.splashContainer}>
-        {/* Full-screen splash background - exact filename: splash.png */}
         <Image
           source={require("./assets/splash.png")}
           style={styles.splashImage}
@@ -26,11 +25,19 @@ export default function App() {
   return (
     <WebView
       source={{ uri: "https://viewcenter.fwh.is" }}
+      style={{ flex: 1 }}
       javaScriptEnabled={true}
       domStorageEnabled={true}
       allowsFullscreenVideo={true}
       mediaPlaybackRequiresUserAction={false}
-      style={{ flex: 1 }}
+      startInLoadingState={true}   // shows loader until site loads
+      originWhitelist={["*"]}      // allow all URLs
+      allowsBackForwardNavigationGestures={true} // smoother navigation on iOS
+      mixedContentMode="always"    // fix if site has http + https
+      onError={(syntheticEvent) => {
+        const { nativeEvent } = syntheticEvent;
+        console.warn("WebView error: ", nativeEvent);
+      }}
     />
   );
 }
@@ -43,12 +50,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   splashImage: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
     width: "100%",
     height: "100%",
+    resizeMode: "cover",
   },
 });
