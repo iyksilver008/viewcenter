@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, StyleSheet, Platform } from "react-native";
+import { View, Image, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { WebView } from "react-native-webview";
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowSplash(false), 4000); // 4 seconds
@@ -23,22 +24,34 @@ export default function App() {
   }
 
   return (
-    <WebView
-      source={{ uri: "https://viewcenter.fwh.is" }}
-      style={{ flex: 1 }}
-      javaScriptEnabled={true}
-      domStorageEnabled={true}
-      allowsFullscreenVideo={true}
-      mediaPlaybackRequiresUserAction={false}
-      startInLoadingState={true}   // shows loader until site loads
-      originWhitelist={["*"]}      // allow all URLs
-      allowsBackForwardNavigationGestures={true} // smoother navigation on iOS
-      mixedContentMode="always"    // fix if site has http + https
-      onError={(syntheticEvent) => {
-        const { nativeEvent } = syntheticEvent;
-        console.warn("WebView error: ", nativeEvent);
-      }}
-    />
+    <View style={{ flex: 1 }}>
+      <WebView
+        source={{ uri: "https://viewcenter.fwh.is" }}
+        style={{ flex: 1 }}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        allowsFullscreenVideo={true}
+        mediaPlaybackRequiresUserAction={false}
+        originWhitelist={["*"]}
+        mixedContentMode="always"
+        onLoadStart={() => setLoading(true)}
+        onLoadEnd={() => setLoading(false)}
+        onError={(syntheticEvent) => {
+          const { nativeEvent } = syntheticEvent;
+          console.warn("WebView error: ", nativeEvent);
+        }}
+      />
+      {loading && (
+        <View style={styles.loaderContainer}>
+          <Image
+            source={require("./assets/viewcenter.png")} // your logo file
+            style={styles.logo}
+          />
+          <Text style={styles.loaderText}>Loading ViewCenter…</Text>
+          <ActivityIndicator size="large" color="#ffffff" />
+        </View>
+      )}
+    </View>
   );
 }
 
@@ -53,5 +66,22 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     resizeMode: "cover",
+  },
+  loaderContainer: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    marginBottom: 20,
+    resizeMode: "contain",
+  },
+  loaderText: {
+    color: "#fff",
+    fontSize: 16,
+    marginBottom: 15,
   },
 });
