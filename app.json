@@ -4,7 +4,11 @@
     "slug": "viewcenter",
     "version": "1.0.0",
     "orientation": "portrait",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -23,6 +27,12 @@
     "ios": {
       "bundleIdentifier": "com.viewcenter.app",
       "buildNumber": "1.0.0"
+    },
+    "sdkVersion": "53.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "d0cfb88b-24e8-47f0-ac73-02b813af61cb"
+      }
     }
   }
 }
