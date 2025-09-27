@@ -17,10 +17,12 @@
       "**/*"
     ],
     "android": {
-      "package": "com.viewcenter.app"
+      "package": "com.viewcenter.app",
+      "versionCode": 1
     },
     "ios": {
-      "bundleIdentifier": "com.viewcenter.app"
+      "bundleIdentifier": "com.viewcenter.app",
+      "buildNumber": "1.0.0"
     }
   }
 }
